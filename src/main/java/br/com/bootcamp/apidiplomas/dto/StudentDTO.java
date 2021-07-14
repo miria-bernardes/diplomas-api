@@ -2,7 +2,9 @@ package br.com.bootcamp.apidiplomas.dto;
 
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.validation.constraints.*;
 
@@ -27,5 +29,17 @@ public class StudentDTO {
         this.subjects = subjects;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof StudentDTO)) return false;
+        StudentDTO that = (StudentDTO) o;
+        return Objects.equals(getName(), that.getName()) &&
+                Objects.equals(getSubjects(), that.getSubjects());
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(getName(), getSubjects());
+    }
 }
