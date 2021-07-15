@@ -22,7 +22,7 @@ public class DegreeService {
         return new DegreeDTO(message, average, student);
     }
 
-    private boolean withHonors(double average) {
+    public boolean withHonors(double average) {
         return average > 9;
     }
 

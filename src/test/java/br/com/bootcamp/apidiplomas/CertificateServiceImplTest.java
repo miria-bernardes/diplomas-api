@@ -1,5 +1,6 @@
 package br.com.bootcamp.apidiplomas;
 
+import br.com.bootcamp.apidiplomas.dto.DegreeDTO;
 import br.com.bootcamp.apidiplomas.dto.StudentAnalyzedDTO;
 import br.com.bootcamp.apidiplomas.dto.StudentDTO;
 import br.com.bootcamp.apidiplomas.dto.SubjectDTO;
@@ -10,10 +11,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Arrays;
 import java.util.List;
 
+@SpringBootTest
 public class CertificateServiceImplTest {
 
     @InjectMocks private DegreeService service;
@@ -34,6 +37,10 @@ public class CertificateServiceImplTest {
         return new StudentAnalyzedDTO(service.calcAverage(getStudentMock().getSubjects()), getStudentMock());
     }
 
+    private DegreeDTO getDegreeMock() {
+        return new DegreeDTO( "Parabéns, Miria Bernardes você foi aprovado com uma das melhores notas da turma!", service.calcAverage(getStudentMock().getSubjects()), getStudentMock());
+    }
+
 
     @Test
     void shouldBeEqualsStudentMock() {
@@ -44,5 +51,16 @@ public class CertificateServiceImplTest {
     @Test
     void shouldReturnNineDotFive() {
         Assertions.assertEquals(service.calcAverage(getStudentMock().getSubjects()), 9.5);
+    }
+
+
+    @Test
+    void shouldReturnDegree() {
+        Assertions.assertEquals(getDegreeMock(), service.getDegree(getStudentMock()));
+    }
+
+    @Test
+    void shouldBeGraduateWithHonor() {
+        Assertions.assertTrue(service.withHonors(service.calcAverage(getStudentMock().getSubjects())));
     }
 }
